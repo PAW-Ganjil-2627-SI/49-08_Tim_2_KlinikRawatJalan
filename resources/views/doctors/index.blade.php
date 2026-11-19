@@ -5,8 +5,8 @@
 <div class="flex justify-between items-center mb-6">
     <h1 class="text-3xl font-semibold">Rekapitulasi Data Dokter</h1>
 
-    @if (auth()->user()->role === 'admin')
-        <a href="{{ route('doctors.create') }}" class="bg-emerald-700 text-white py-2 px-6 rounded-full hover:bg-emerald-800">Tambah Dokter Baru</a>
+    @if (strtolower(auth()->user()->role ?? '') === 'admin')
+    <a href="{{ route('doctors.create') }}" class="btn btn-primary">+ Tambah Dokter</a>
     @endif
 </div>
 
