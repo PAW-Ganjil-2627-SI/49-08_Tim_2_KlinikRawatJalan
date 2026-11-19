@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ObatController;
+use App\Http\Controllers\RuangPoliklinikController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -55,5 +56,19 @@ Route::middleware('auth')->group(function () {
     });
 
     // ================= MODUL D: RUANG POLIKLINIK =================
+    Route::middleware('role:admin,user')->group(function () {
+        Route::get('/polikliniks', [RuangPoliklinikController::class, 'index'])
+            ->name('polikliniks.index');
+    });
 
+    Route::middleware('role:admin')->group(function () {
+        Route::post('/polikliniks', [RuangPoliklinikController::class, 'store'])
+            ->name('polikliniks.store');
+        Route::get('/polikliniks/{ruang}/edit', [RuangPoliklinikController::class, 'edit'])
+            ->name('polikliniks.edit');
+        Route::put('/polikliniks/{ruang}', [RuangPoliklinikController::class, 'update'])
+            ->name('polikliniks.update');
+        Route::delete('/polikliniks/{ruang}', [RuangPoliklinikController::class, 'destroy'])
+            ->name('polikliniks.destroy');
+    });
 });
