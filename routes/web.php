@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PasienController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\RuangPoliklinikController;
@@ -25,7 +26,18 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     // ================= MODUL A: MANAJEMEN PASIEN =================
+    Route::middleware(['role:admin'])->group(function () {
+        Route::get('/pasiens/create', [PasienController::class, 'create'])->name('pasiens.create');
+        Route::post('/pasiens', [PasienController::class, 'store'])->name('pasiens.store');
+        Route::get('/pasiens/{pasien}/edit', [PasienController::class, 'edit'])->name('pasiens.edit');
+        Route::put('/pasiens/{pasien}', [PasienController::class, 'update'])->name('pasiens.update');
+        Route::delete('/pasiens/{pasien}', [PasienController::class, 'destroy'])->name('pasiens.destroy');
+    });
 
+    Route::middleware(['role:admin,user'])->group(function () {
+        Route::get('/pasiens', [PasienController::class, 'index'])->name('pasiens.index');
+        Route::get('/pasiens/{pasien}', [PasienController::class, 'show'])->name('pasiens.show');
+    });
 
     // ================= MODUL B: DOKTER & MEDIS ===================
     Route::middleware('role:admin')->group(function () {
@@ -61,14 +73,4 @@ Route::middleware('auth')->group(function () {
             ->name('polikliniks.index');
     });
 
-    Route::middleware('role:admin')->group(function () {
-        Route::post('/polikliniks', [RuangPoliklinikController::class, 'store'])
-            ->name('polikliniks.store');
-        Route::get('/polikliniks/{ruang}/edit', [RuangPoliklinikController::class, 'edit'])
-            ->name('polikliniks.edit');
-        Route::put('/polikliniks/{ruang}', [RuangPoliklinikController::class, 'update'])
-            ->name('polikliniks.update');
-        Route::delete('/polikliniks/{ruang}', [RuangPoliklinikController::class, 'destroy'])
-            ->name('polikliniks.destroy');
-    });
-});
+    Route::middleware('role:admin
