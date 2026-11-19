@@ -73,4 +73,14 @@ Route::middleware('auth')->group(function () {
             ->name('polikliniks.index');
     });
 
-    Route::middleware('role:admin
+    Route::middleware('role:admin')->group(function () {
+        Route::post('/polikliniks', [RuangPoliklinikController::class, 'store'])
+            ->name('polikliniks.store');
+        Route::get('/polikliniks/{ruang}/edit', [RuangPoliklinikController::class, 'edit'])
+            ->name('polikliniks.edit');
+        Route::put('/polikliniks/{ruang}', [RuangPoliklinikController::class, 'update'])
+            ->name('polikliniks.update');
+        Route::delete('/polikliniks/{ruang}', [RuangPoliklinikController::class, 'destroy'])
+            ->name('polikliniks.destroy');
+    });
+});
