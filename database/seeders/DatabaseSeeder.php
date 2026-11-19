@@ -24,6 +24,6 @@ class DatabaseSeeder extends Seeder
         $user->role = User::ROLE_USER;
         $user->save();
 
-        // Pemanggilan seeder data tiap modul nanti ditambahkan di sini
+        $this->call(ObatSeeder::class);
     }
 }
