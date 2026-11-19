@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DoctorController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
@@ -27,7 +28,18 @@ Route::middleware('auth')->group(function () {
 
 
     // ================= MODUL B: DOKTER & MEDIS ===================
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/dokters/create', [DoctorController::class, 'create'])->name('doctors.create');
+        Route::post('/dokters', [DoctorController::class, 'store'])->name('doctors.store');
+        Route::get('/dokters/{doctor}/edit', [DoctorController::class, 'edit'])->name('doctors.edit');
+        Route::put('/dokters/{doctor}', [DoctorController::class, 'update'])->name('doctors.update');
+        Route::delete('/dokters/{doctor}', [DoctorController::class, 'destroy'])->name('doctors.destroy');
+    });
 
+    Route::middleware('role:admin,user')->group(function () {
+        Route::get('/dokters', [DoctorController::class, 'index'])->name('doctors.index');
+        Route::get('/dokters/{doctor}', [DoctorController::class, 'show'])->name('doctors.show');
+    });
 
     // ================= MODUL C: KATALOG FARMASI ==================
 
