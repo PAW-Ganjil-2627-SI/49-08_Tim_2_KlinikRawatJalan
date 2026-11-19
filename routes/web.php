@@ -3,12 +3,12 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\ObatController;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
-// Middleware guest & throttle untuk halaman login
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])
@@ -16,7 +16,6 @@ Route::middleware('guest')->group(function () {
         ->name('login.proses');
 });
 
-// Semua halaman modul wajib login
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
@@ -42,7 +41,18 @@ Route::middleware('auth')->group(function () {
     });
 
     // ================= MODUL C: KATALOG FARMASI ==================
+    Route::middleware('role:admin,user')->group(function () {
+        Route::get('/obats', [ObatController::class, 'index'])->name('obats.index');
+        Route::get('/obats/{obat}', [ObatController::class, 'show'])->name('obats.show');
+    });
 
+    Route::prefix('admin')->middleware('role:admin')->group(function () {
+        Route::get('/obats/create', [ObatController::class, 'create'])->name('obats.create');
+        Route::post('/obats', [ObatController::class, 'store'])->name('obats.store');
+        Route::get('/obats/{obat}/edit', [ObatController::class, 'edit'])->name('obats.edit');
+        Route::put('/obats/{obat}', [ObatController::class, 'update'])->name('obats.update');
+        Route::delete('/obats/{obat}', [ObatController::class, 'destroy'])->name('obats.destroy');
+    });
 
     // ================= MODUL D: RUANG POLIKLINIK =================
 
