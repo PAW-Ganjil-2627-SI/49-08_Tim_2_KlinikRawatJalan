@@ -1,58 +1,62 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem Informasi Klinik Rawat Jalan
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Repository kelompok Tugas Besar mata kuliah **Pengembangan Aplikasi Website (PAW)** — Program Studi S1 Sistem Informasi.
 
-## About Laravel
+## Identitas Kelompok
+- **Kelas:** SI-49-08
+- **Kelompok:** Tim 2 (SK02 — Klinik Rawat Jalan)
+- **Organisasi:** `PAW-Ganjil-2627-SI`
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Anggota Tim & Pembagian Modul
+Setiap anggota mengelola satu sub-sistem otonom yang terintegrasi dalam satu aplikasi Laravel:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+| Peran | Nama Mahasiswa | Modul | Fokus Pengelolaan | Route Utama |
+| :--- | :--- | :--- | :--- | :--- |
+| **Individu A** | Muhamad Gaizka Prawira Darmawan | Manajemen Pasien | Profil pasien, nomor rekam medis dasar, domisili, dan kontak darurat | `/pasiens` |
+| **Individu B** | Muhammad Nabil Asyraf | Dokter & Medis | Data master dokter, nomor SIP, spesialisasi, ruangan, kontak, dan foto | `/dokters` |
+| **Individu C** | Najwan Arkaan Setiawan | Katalog Farmasi | Master data obat, kategori, sediaan, pabrikan, harga, dan stok | `/obats` |
+| **Individu D** | Vladien Oscardo Fajarai | Ruang Poliklinik | Master ruangan poli, lokasi gedung, dan inventaris alat medis | `/polikliniks` |
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Fitur Utama
+- **Autentikasi Terpusat:** Login dan Logout berbasis `username` dilengkapi middleware `guest`, `auth`, dan pembatasan percobaan login (`throttle:20,1`).
+- **Role-Based Authorization (`RoleMiddleware`):**
+  - **`admin`:** Akses penuh (Lihat, Detail, Tambah, Edit, dan Hapus data pada seluruh modul).
+  - **`user`:** Hanya dapat melihat daftar dan detail data; percobaan akses langsung ke rute pengelolaan admin akan diblokir dengan halaman **HTTP 403 Forbidden**.
+- **Dashboard & Navigasi Terintegrasi:** Layout bersama berbasis Bootstrap 5 yang menghubungkan keempat modul dalam satu antarmuka.
+- **Database Migration & Seeder:** Pembentukan tabel seluruh modul serta akun bawaan secara otomatis tanpa import SQL manual.
 
-## Learning Laravel
+## Teknologi yang Digunakan
+- **Backend:** PHP 8.3+ & Laravel 13
+- **Frontend:** Blade Templating & Bootstrap 5.3
+- **Database:** MySQL (`db_klinik`)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Akun Demo (Seeder)
+| Role | Username | Password | Hak Akses |
+| :--- | :--- | :--- | :--- |
+| **Admin** | `admin` | `password` | CRUD Penuh (Semua Modul) |
+| **User** | `user` | `password` | Read-Only (Lihat Data & Detail) |
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
-```
-
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Cara Menjalankan di Lokal
+1. Clone repository ini:
+   ```bash
+   git clone [https://github.com/PAW-Ganjil-2627-SI/49-08_Tim_2_KlinikRawatJalan.git](https://github.com/PAW-Ganjil-2627-SI/49-08_Tim_2_KlinikRawatJalan.git)
+   cd 49-08_Tim_2_KlinikRawatJalan
+   ```
+2. Install seluruh dependensi Laravel:
+   ```bash
+   composer install
+   ```
+3. Salin file `.env.example` menjadi `.env`:
+   ```bash
+   copy .env.example .env
+   ```
+   *(Pengguna Mac/Linux gunakan `cp .env.example .env`)*
+4. Buat database kosong bernama **`db_klinik`** di phpMyAdmin (sesuaikan `DB_USERNAME` dan `DB_PASSWORD` pada `.env` jika berbeda).
+5. Generate application key, jalankan migrasi beserta seeder, buat storage link (untuk tampilan foto dokter), dan nyalakan server:
+   ```bash
+   php artisan key:generate
+   php artisan migrate:fresh --seed
+   php artisan storage:link
+   php artisan serve
+   ```
+6. Buka aplikasi di browser pada alamat `http://127.0.0.1:8000` lalu login menggunakan akun demo di atas.
